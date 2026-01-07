@@ -49,14 +49,15 @@ exports.login = async ({
     }
 
     const token = jwt.sign({
-            userId: user._id,
-            role: user.role
-        },
-        process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        }
+        userId: existingUser._id,
+        role: existingUser.role
+    },
+    process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN
+    });
+    console.log("JWT_SECRET USED:", process.env.JWT_SECRET);
 
-    );
+    console.log(token);
     const userObj = existingUser.toObject();
     delete userObj.password;
 
