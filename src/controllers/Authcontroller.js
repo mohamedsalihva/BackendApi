@@ -1,15 +1,4 @@
-const userService = require('../services/user.service');
-
-exports.getUsers = (req, res) => {
-    const users = userService.getAllUsers();
-
-    res.status(200).json({
-        success: true,
-        data: users,
-        message: "User fetched successfully"
-    })
-}
-
+const AuthService = require('../services/Authservice');
 
 
 exports.signup = async (req, res) => {
@@ -25,7 +14,7 @@ exports.signup = async (req, res) => {
                 message: "Name, email and password are required"
             })
         }
-        const newUser = await userService.signup({
+        const newUser = await AuthService.signup({
             name,
             email,
             password
@@ -44,3 +33,22 @@ exports.signup = async (req, res) => {
         });
     }
 }
+
+exports.login =async (req,res)=>{
+    try {
+        const {user ,token}= await AuthService.login(req.body);
+        res.status(200).json({
+            success:true,
+            message:"User logged in successfully",
+            data:{
+                user,
+                token
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+};
