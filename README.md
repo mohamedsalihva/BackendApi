@@ -56,18 +56,18 @@ system follows a layered architecture each layer  has a single responsibilities.
   database operation
   jwt generation
 
-.Model module
+.Model module :
   Defines database structure
   Used by services
   Communicate with MongoDB
 
-.middleware module
+.middleware module :
   protect routes
   verify jwt
   attach user to request
 
 
-6 authentication Flow 
+6 authentication Flow  :
 
 Signup Flow:
 User sends signup request
@@ -83,7 +83,7 @@ JWT generated
 JWT stored in cookie
 User authenticated
 
-7 Db design
+7 Db design :
   name
   email
   password(hashed)
@@ -91,7 +91,7 @@ User authenticated
   provider
   createdat
 
-8 security measures
+8 security measures :
   password hashing using  bcrypt
   jwt signed using  secret key
   jwt  stored in http only cookies
