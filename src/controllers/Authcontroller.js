@@ -1,7 +1,6 @@
-const AuthService = require('../services/Authservice');
+import { signup, login } from '../services/Authservice.js';
 
-
-exports.signup = async (req, res) => {
+export const signupController = async (req, res) => {
     try {
         const {
             name,
@@ -14,7 +13,7 @@ exports.signup = async (req, res) => {
                 message: "Name, email and password are required"
             })
         }
-        const newUser = await AuthService.signup({
+        const newUser = await signup({
             name,
             email,
             password
@@ -34,9 +33,17 @@ exports.signup = async (req, res) => {
     }
 }
 
-exports.login =async (req,res)=>{
+export const loginController =async (req,res)=>{
     try {
-        const {user ,token}= await AuthService.login(req.body);
+        const {user ,token}= await login(req.body);
+        
+        res.cookie("token",token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"strict",
+            maxAge:24*60*60*1000
+        });
+
         res.status(200).json({
             success:true,
             message:"User logged in successfully",
@@ -52,3 +59,4 @@ exports.login =async (req,res)=>{
         });
     }
 };
+

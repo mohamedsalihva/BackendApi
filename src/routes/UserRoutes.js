@@ -1,6 +1,8 @@
-const express =require('express');
+import express from 'express';
+
+import AuthMiddleware from "../middlewares/AuthMiddleware.js";
+
 const router = express.Router();
-const AuthMiddleware = require("../middlewares/AuthMiddleware");
 
 router.get("/profile",AuthMiddleware, (req,res)=>{
     res.json({
@@ -9,4 +11,4 @@ router.get("/profile",AuthMiddleware, (req,res)=>{
         userFromToken:req.user
     });
 });
- module.exports=router;
+ export default router;

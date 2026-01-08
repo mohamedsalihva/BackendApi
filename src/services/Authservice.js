@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const user = require('../models/user');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import user from '../models/user.js';
 
 
-exports.signup = async ({
+export const signup = async ({
     name,
     email,
     password
@@ -33,7 +33,7 @@ exports.signup = async ({
 }
 
 
-exports.login = async ({
+export const login = async ({
     email,
     password
 }) => {
