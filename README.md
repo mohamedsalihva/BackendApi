@@ -1,109 +1,34 @@
-1. Title Page
-2. Abstract / Overview
-3. Technology Stack
-4. System Architecture
-5. Module Description
-6. Authentication Flow
-7. Database Design
-8. Security Measures
-9. Conclusion
+# Node.js Authentication System (ES Modules)
 
+This project implements a secure authentication system using Node.js and Express with MongoDB as the database. It supports user signup and login with hashed passwords and JWT-based authentication stored in HTTP-only cookies. The backend follows a layered architecture using ES Modules to ensure scalability, maintainability, and clean separation of concerns.
 
+## Technology Stack
+Node.js is used as the JavaScript runtime environment. Express.js handles routing and HTTP requests. MongoDB is used as a NoSQL database to store user data, with Mongoose acting as the ODM (Object Document Mapper). JWT (JSON Web Tokens) are used for authentication, bcrypt is used for password hashing, ES Modules provide a modern module system, cookie-parser is used for handling cookies, and cors enables cross-origin communication between frontend and backend applications.
 
-1  Node.js Authentication System using ES Modules
-   Technologies:Node.js, Express, MongoDB, JWT, ES Modules
+## System Architecture
+The system follows a layered architecture:
 
-2 This project implements a secure authentication system using Node.js and Express with MongoDB as the database. The system supports user signup and login using hashed passwords and JWT-based authentication stored in cookies. The backend follows a layered architecture using ES Modules for scalability and maintainability.
+Client → Routes → Controllers → Services → Models → MongoDB
 
-3 . Node.js-javascript run time environment
-  . Express.js-Backend framework for routing and HTTP Handling 
-  . MongoDB-NosQL database for storing user data
-  . Mongoose-ODM (object document mapping) for MongoDB
-  . JWT-Token based Authentication
-  . bcrypt-password hashing
-  . ES Modules-Modern js module system
-  . cookie-parser-cookie handling
-  . cors-cross origin communication (communication b/w frontend and backend which uses different origin)
+Each layer has a single responsibility. Routes define API endpoints and forward requests. Controllers handle HTTP request and response logic. Services implement business logic such as password hashing, JWT generation, and database operations. Models define the database schema and interact with MongoDB.
 
-4
- Client
-  ↓
-Routes
-  ↓
-Controllers
-  ↓
-Services
-  ↓
-Models
-  ↓
-MongoDB
+## Module Overview
+Routes modules define API endpoints and connect requests to controllers. Controller modules handle request validation, response formatting, and service calls. Service modules contain core business logic including authentication, password hashing, JWT creation, and database access. Model modules define the structure of stored data. Middleware modules protect routes, verify JWT tokens, and attach authenticated user information to the request object.
 
-system follows a layered architecture each layer  has a single responsibilities.Routes  define endpoints ,controllers handles HTTP logics,service implements business logic and model interact with the db
+## Authentication Flow
+During signup, the user sends a request with required details. The controller validates the input, the service hashes the password, user data is stored in the database, and a success response is returned. During login, the user submits credentials, the password is verified, a JWT is generated, the token is stored in an HTTP-only cookie, and the user is authenticated.
 
-5
-  .Routes Module
-   defines api endpoints
-   forward request to controllers
+## Database Design
+The User collection contains fields for name, email, hashed password, role, provider, and createdAt timestamp.
 
-.controller module
-  Handle request and response
-  Validate input
-  Call service methods
+## Security Measures
+Passwords are securely hashed using bcrypt. JWTs are signed using a secret key and stored in HTTP-only cookies to prevent client-side access. Protected routes are secured using authentication and authorization middleware. Sensitive configuration values are managed using environment variables.
 
-.service module
-  business logic
-  password hashing
-  database operation
-  jwt generation
+## Admin Management
+An admin user is created using database seeding. Role-based access control is implemented, allowing admins to manage users through protected admin-only routes.
 
-.Model module :
-  Defines database structure
-  Used by services
-  Communicate with MongoDB
+## Important Request Concepts
+`req.params` is used to access data from URL parameters such as IDs. `req.body` contains data sent in the request body. `req.user` holds authenticated user information extracted from the JWT. Middleware functions run before controllers, and `next()` is used to pass control to the next middleware in the request lifecycle.
 
-.middleware module :
-  protect routes
-  verify jwt
-  attach user to request
-
-
-6 authentication Flow  :
-
-Signup Flow:
-User sends signup request
-Controller validates input
-Service hashes password
-User stored in database
-Response returned
-
-Login Flow:
-User sends login request
-Password verified
-JWT generated
-JWT stored in cookie
-User authenticated
-
-7 Db design :
-  name
-  email
-  password(hashed)
-  role
-  provider
-  createdat
-
-8 security measures :
-  password hashing using  bcrypt
-  jwt signed using  secret key
-  jwt  stored in http only cookies
-  protected routes via middleware
-  env variables
-
-9
-admin is created through seeding
-
-10
-req.params	Data from URL (:id)
-req.body	Data sent in request body
-req.user	Logged-in user info (JWT)
-middleware	Runs before controller
-next()	Move to next step
+## Conclusion
+This project demonstrates a clean, secure, and scalable backend authentication system using modern Node.js practices, ES Modules, and a layered architecture suitable for real-world applications.
