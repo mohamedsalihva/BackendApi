@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 
 
-import { signupController, loginController } from '../controllers/Authcontroller.js';
+import { signupController, loginController } from '../controllers/AuthController.js';
 
 
 

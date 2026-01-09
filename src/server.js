@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 
+
+
 app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
 });

@@ -1,7 +1,8 @@
 import {
     getAllUsersService,
     deleteUserService,
-    updateUserService
+    updateUserService,
+    getSingleUserService
 } from "../services/AdminService.js";
 
 
@@ -31,5 +32,23 @@ export const updateUsersController = async (req,res)=>{
         data:user,
         message:"User updated successfully"
     });
+}
+
+export const getSingleUserController = async (req, res) => {
+try {
+    const user = await getSingleUserService(req.params.id);
+    res.status(200).json({
+        success: true,
+        data: user,
+        message: "User fetched successfully"
+    });
+
+
+} catch (error) {
+    res.status(500).json({
+        success: false,
+        message: "Server Error"
+    });
+}
 }
     
